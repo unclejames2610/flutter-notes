@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "890455753395",
+    "project_id": "ebuka-flutter-notes",
+    "storage_bucket": "ebuka-flutter-notes.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:890455753395:android:5e63024e0712db4a4be6c6",
+        "android_client_info": {
+          "package_name": "com.example.mynotes"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCm-vZF48khGHkdy1lP3cIgCMNK5wQsftA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
