@@ -1,9 +1,7 @@
-import 'package:flutter/foundation.dart';
-import 'package:flutter/widgets.dart';
-
 import 'package:flutter/material.dart';
 import 'package:mynotes/services/auth/auth_service.dart';
 import 'package:mynotes/services/crud/notes_service.dart';
+import 'dart:developer' as devtools show log;
 
 class NewNoteView extends StatefulWidget {
   const NewNoteView({super.key});
@@ -48,6 +46,7 @@ class _NewNoteViewState extends State<NewNoteView> {
       return existingNote;
     }
     final currentuser = AuthService.firebase().currentUser!;
+
     final email = currentuser.email!;
     final owner = await _notesService.getUser(email: email);
     return await _notesService.createNote(owner: owner);
@@ -92,16 +91,29 @@ class _NewNoteViewState extends State<NewNoteView> {
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.done:
-              _note = snapshot.data as DatabaseNote;
-              _setupTextControllerListener();
-              return TextField(
-                controller: _textController,
-                keyboardType: TextInputType.multiline,
-                maxLines: null,
-                decoration: const InputDecoration(
-                  hintText: 'Start typing your note...',
-                ),
-              );
+              if (snapshot.data != null) {
+                _note = snapshot.data as DatabaseNote;
+                _setupTextControllerListener();
+                devtools.log(_note.toString());
+                return TextField(
+                  controller: _textController,
+                  keyboardType: TextInputType.multiline,
+                  maxLines: null,
+                  decoration: const InputDecoration(
+                    hintText: 'Start typing your note...',
+                  ),
+                );
+              } else {
+                // Handle the case where snapshot.data is null.
+                final currentuser = AuthService.firebase().currentUser!;
+
+                final email = currentuser.email!;
+
+                devtools.log(email.toString());
+                devtools.log(currentuser.toString());
+                devtools.log(_note.toString());
+                return const Text('Error: Unable to create a new note.');
+              }
 
             default:
               return const CircularProgressIndicator();
